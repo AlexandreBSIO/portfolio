@@ -91,9 +91,61 @@ typeStep();
 /* ── CONTACT FORM (Formspree async) ── */
 const form = document.getElementById('contact-form');
 const successMsg = document.getElementById('form-success');
+const errorBox = document.getElementById('form-error');
+
+const FIELD_LABELS = { nom: 'Nom', email: 'Email', message: 'Message' };
+
+function clearErrors() {
+  errorBox.classList.remove('visible');
+  errorBox.innerHTML = '';
+  form.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
+}
+
+function showError(title, items, fields = []) {
+  let html = `<strong>${title}</strong>`;
+  if (items && items.length) {
+    html += '<ul>' + items.map(i => `<li>${i}</li>`).join('') + '</ul>';
+  }
+  errorBox.innerHTML = html;
+  errorBox.classList.add('visible');
+  fields.forEach(f => {
+    const el = form.querySelector(`[name="${f}"]`);
+    if (el) el.classList.add('input-error');
+  });
+  errorBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function validateClient() {
+  const nom = form.nom.value.trim();
+  const email = form.email.value.trim();
+  const message = form.message.value.trim();
+  const errors = [];
+  const fields = [];
+
+  if (!nom)        { errors.push('Le nom est obligatoire.');     fields.push('nom'); }
+  if (!email)      { errors.push('L’email est obligatoire.'); fields.push('email'); }
+  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    errors.push('Le format de l’email est invalide (ex : nom@domaine.fr).');
+    fields.push('email');
+  }
+  if (!message)         { errors.push('Le message est obligatoire.'); fields.push('message'); }
+  else if (message.length < 10) {
+    errors.push('Le message doit faire au moins 10 caractères.');
+    fields.push('message');
+  }
+  return { errors, fields };
+}
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
+  clearErrors();
+
+  const { errors, fields } = validateClient();
+  if (errors.length) {
+    showError('Merci de corriger les points suivants :', errors, fields);
+    return;
+  }
+
   const btn = form.querySelector('button[type="submit"]');
   btn.disabled = true;
   btn.textContent = 'Envoi...';
@@ -104,17 +156,65 @@ form.addEventListener('submit', async (e) => {
       body: new FormData(form),
       headers: { Accept: 'application/json' }
     });
+
     if (res.ok) {
       form.style.display = 'none';
       successMsg.style.display = 'block';
-    } else {
-      btn.disabled = false;
-      btn.textContent = 'Envoyer';
-      alert('Une erreur est survenue. Réessaie plus tard.');
+      return;
     }
-  } catch {
+
+    let data = null;
+    try { data = await res.json(); } catch { /* not JSON */ }
+
+    const fieldErrors = [];
+    const fieldHighlights = [];
+
+    if (data && Array.isArray(data.errors) && data.errors.length) {
+      data.errors.forEach(err => {
+        const fieldName = err.field;
+        const label = FIELD_LABELS[fieldName] || fieldName;
+        const msg = err.message || 'valeur invalide';
+        fieldErrors.push(label ? `${label} : ${msg}` : msg);
+        if (fieldName) fieldHighlights.push(fieldName);
+      });
+      showError('Formulaire refusé par le serveur :', fieldErrors, fieldHighlights);
+    } else if (res.status === 403) {
+      showError('Le formulaire n’est pas encore activé.', [
+        'L’administrateur du site doit confirmer son adresse Formspree avant de pouvoir recevoir des messages.'
+      ]);
+    } else if (res.status === 404) {
+      showError('Destinataire introuvable.', [
+        'L’identifiant du formulaire est invalide ou a été supprimé.'
+      ]);
+    } else if (res.status === 422) {
+      showError('Message bloqué.', [
+        'Le filtre anti-spam a rejeté le message. Réessayez avec un contenu différent.'
+      ]);
+    } else if (res.status === 429) {
+      showError('Trop de tentatives.', [
+        'Vous avez envoyé trop de messages en peu de temps. Patientez quelques minutes avant de réessayer.'
+      ]);
+    } else if (res.status >= 500) {
+      showError('Le serveur Formspree est indisponible.', [
+        `Code d’erreur HTTP ${res.status}. Réessayez dans quelques minutes.`
+      ]);
+    } else {
+      showError(`Erreur HTTP ${res.status}.`, [
+        data && data.error ? data.error : 'Réponse inattendue du serveur.'
+      ]);
+    }
+  } catch (err) {
+    showError('Impossible de joindre le serveur.', [
+      'Vérifiez votre connexion internet, puis réessayez.',
+      `Détail technique : ${err.message || err}`
+    ]);
+  } finally {
     btn.disabled = false;
     btn.textContent = 'Envoyer';
-    alert('Une erreur réseau est survenue.');
   }
+});
+
+['nom', 'email', 'message'].forEach(name => {
+  const el = form.querySelector(`[name="${name}"]`);
+  if (el) el.addEventListener('input', () => el.classList.remove('input-error'));
 });
