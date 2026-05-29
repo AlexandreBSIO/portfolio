@@ -519,6 +519,15 @@ section {
 .contact-form-wrapper {
   position: relative;
 }
+/* Honeypot anti-spam — masqué visuellement et aux lecteurs d'écran */
+.honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
 .form-group {
   margin-bottom: 20px;
 }

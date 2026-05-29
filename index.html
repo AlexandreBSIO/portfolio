@@ -246,7 +246,7 @@
           <div class="contact-form-wrapper reveal">
             <form id="contact-form" action="https://formspree.io/f/xlgvzrjp" method="POST" novalidate>
               <!-- Honeypot anti-spam : Formspree ignore ce champ s'il est rempli par un bot -->
-              <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true" />
+              <input type="text" name="_gotcha" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
               <div class="form-group">
                 <label for="nom">Nom</label>
                 <input type="text" id="nom" name="nom" placeholder="Votre nom" autocomplete="name" required />
