@@ -51,7 +51,7 @@
   <!-- Compétences clés -->
   <text x="268" y="378"
         font-family="monospace,sans-serif"
-        font-size="15" fill="#6d5caa">Active Directory · Kerberos · Proxmox · pfSense · Python · Docker</text>
+        font-size="15" fill="#9580cc">Active Directory · Kerberos · Proxmox · PingCastle · Python · Docker</text>
 
   <!-- URL dans la bande -->
   <text x="60" y="583"
