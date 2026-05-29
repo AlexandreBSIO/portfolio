@@ -1,6 +1,18 @@
 /* Fallback no-JS : le CSS cache .reveal par défaut, on le réactive ici */
 document.documentElement.classList.add('js-enabled');
 
+/* ── EMAIL OBFUSCATION ── */
+/* Assemblé en JS pour ne pas exposer l'adresse aux bots de spam dans le HTML */
+(function () {
+  const u = 'alexandre.boulou.sio';
+  const d = 'gmail.com';
+  const email = u + '@' + d;
+  const link = document.getElementById('email-link');
+  const display = document.getElementById('email-display');
+  if (link) link.href = 'mailto:' + email;
+  if (display) display.textContent = email;
+})();
+
 /* ── NAVBAR: scroll border + active link ── */
 const navbar = document.getElementById('navbar');
 const sections = document.querySelectorAll('section[id]');

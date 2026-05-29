@@ -12,7 +12,7 @@
   --accent-deep:   #5b21b6;
   --text-primary:  #f5f3ff;
   --text-secondary:#a89fd8;
-  --text-muted:    #6d5caa;
+  --text-muted:    #9580cc;
   --border:        rgba(124, 58, 237, 0.2);
   --border-strong: rgba(124, 58, 237, 0.5);
   --font-body:     'Inter', sans-serif;
@@ -706,6 +706,9 @@ footer {
   .hero-ctas { flex-direction: column; }
   .hero-ctas .btn { width: 100%; justify-content: center; }
 }
+
+/* Honeypot anti-spam : caché via CSS (pas inline) pour respecter la CSP */
+.honeypot { display: none !important; }
 
 /* ── UTILITY ── */
 .btn-full { width: 100%; justify-content: center; }
