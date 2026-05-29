@@ -1,5 +1,5 @@
 /* ══════════════════════════════════════
-   PORTFOLIO — Alexandre BOULOU
+   PORTFOLIO - Alexandre BOULOU
    Pour changer les couleurs, modifie :root ci-dessous.
    ══════════════════════════════════════ */
 
@@ -519,7 +519,7 @@ section {
 .contact-form-wrapper {
   position: relative;
 }
-/* Honeypot anti-spam — masqué visuellement et aux lecteurs d'écran */
+/* Honeypot anti-spam - masqué visuellement et aux lecteurs d'écran */
 .honeypot {
   position: absolute;
   left: -9999px;
@@ -673,7 +673,7 @@ footer {
 .footer-links a:hover { color: var(--accent); }
 
 /* ═══════════════════════════════════════
-   RESPONSIVE — 768px
+   RESPONSIVE - 768px
 ════════════════════════════════════════ */
 @media (max-width: 768px) {
   section { padding: 72px 0; }

@@ -71,7 +71,7 @@ revealEls.forEach(el => observer.observe(el));
 
 /* ── TYPING EFFECT ── */
 const strings = [
-  'Étudiant BTS SIO — SISR',
+  'Étudiant BTS SIO - SISR',
   'Réseaux & Cybersécurité',
   'Administration Système'
 ];
