@@ -1,3 +1,6 @@
+/* Fallback no-JS : le CSS cache .reveal par défaut, on le réactive ici */
+document.documentElement.classList.add('js-enabled');
+
 /* ── NAVBAR: scroll border + active link ── */
 const navbar = document.getElementById('navbar');
 const sections = document.querySelectorAll('section[id]');
@@ -86,7 +89,12 @@ function typeStep() {
     setTimeout(typeStep, 35);
   }
 }
-typeStep();
+
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  typingEl.textContent = strings[0];
+} else {
+  typeStep();
+}
 
 /* ── CONTACT FORM (Formspree async) ── */
 const form = document.getElementById('contact-form');
@@ -102,11 +110,19 @@ function clearErrors() {
 }
 
 function showError(title, items, fields = []) {
-  let html = `<strong>${title}</strong>`;
+  errorBox.innerHTML = '';
+  const strong = document.createElement('strong');
+  strong.textContent = title;
+  errorBox.appendChild(strong);
   if (items && items.length) {
-    html += '<ul>' + items.map(i => `<li>${i}</li>`).join('') + '</ul>';
+    const ul = document.createElement('ul');
+    items.forEach(text => {
+      const li = document.createElement('li');
+      li.textContent = text;
+      ul.appendChild(li);
+    });
+    errorBox.appendChild(ul);
   }
-  errorBox.innerHTML = html;
   errorBox.classList.add('visible');
   fields.forEach(f => {
     const el = form.querySelector(`[name="${f}"]`);

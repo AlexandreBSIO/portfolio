@@ -18,6 +18,13 @@
   <meta property="og:title" content="Alexandre Boulou | BTS SIO SISR" />
   <meta property="og:description" content="Portfolio d'Alexandre Boulou, étudiant BTS SIO option SISR. Réseaux, cybersécurité et administration système." />
   <meta property="og:type" content="website" />
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+  <!-- og:image — remplace par /assets/og.png si tu veux un support LinkedIn optimal -->
+  <meta property="og:image" content="https://alexandre-boulou.vercel.app/assets/og.svg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:url" content="https://alexandre-boulou.vercel.app" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -218,7 +225,7 @@
           <!-- Projet: Placeholder -->
           <article class="project-card placeholder reveal">
             <div class="project-label">Prochain projet</div>
-            <h3 class="project-title" style="color: var(--text-muted);">Bientôt...</h3>
+            <h3 class="project-title project-title--muted">Bientôt...</h3>
             <p class="project-desc muted">D'autres projets arrivent bientôt.</p>
           </article>
 
@@ -238,20 +245,22 @@
 
           <div class="contact-form-wrapper reveal">
             <form id="contact-form" action="https://formspree.io/f/xlgvzrjp" method="POST" novalidate>
+              <!-- Honeypot anti-spam : Formspree ignore ce champ s'il est rempli par un bot -->
+              <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true" />
               <div class="form-group">
                 <label for="nom">Nom</label>
-                <input type="text" id="nom" name="nom" placeholder="Votre nom" required />
+                <input type="text" id="nom" name="nom" placeholder="Votre nom" autocomplete="name" required />
               </div>
               <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="votre@email.fr" required />
+                <input type="email" id="email" name="email" placeholder="votre@email.fr" autocomplete="email" required />
               </div>
               <div class="form-group">
                 <label for="message">Message</label>
-                <textarea id="message" name="message" rows="5" placeholder="Votre message..." required></textarea>
+                <textarea id="message" name="message" rows="5" placeholder="Votre message..." autocomplete="off" required></textarea>
               </div>
               <div class="form-error" id="form-error" role="alert" aria-live="assertive"></div>
-              <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Envoyer</button>
+              <button type="submit" class="btn btn-primary btn-full">Envoyer</button>
             </form>
             <div class="form-success" id="form-success" role="status" aria-live="polite">
               Message envoyé ! Je vous répondrai dès que possible.
@@ -277,7 +286,7 @@
             </div>
 
             <a href="mailto:alexandre.boulou.sio@gmail.com" class="social-link">
-              <svg class="social-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="fill:none;stroke:var(--accent);width:20px;height:20px;">
+              <svg class="social-link-icon--email" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
                 <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
                 <polyline points="22,6 12,13 2,6"/>
               </svg>

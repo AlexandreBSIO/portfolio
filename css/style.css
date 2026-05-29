@@ -85,13 +85,13 @@ ul { list-style: none; }
   transform: translateY(-1px);
 }
 
-/* ── SCROLL REVEAL ── */
-.reveal {
+/* ── SCROLL REVEAL (only when JS is active) ── */
+.js-enabled .reveal {
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.5s ease, transform 0.5s ease;
 }
-.reveal.visible {
+.js-enabled .reveal.visible {
   opacity: 1;
   transform: translateY(0);
 }
@@ -427,6 +427,7 @@ section {
   font-weight: 700;
   color: var(--text-primary);
 }
+.project-title--muted { color: var(--text-muted); }
 .project-badge-live {
   font-family: var(--font-mono);
   font-size: 0.65rem;
@@ -615,6 +616,13 @@ section {
   flex-shrink: 0;
 }
 .social-link-icon.muted { fill: var(--text-muted); }
+.social-link-icon--email {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: var(--accent);
+  flex-shrink: 0;
+}
 .social-link-label {
   font-size: 0.85rem;
   font-weight: 500;
@@ -688,4 +696,24 @@ footer {
   .stat-cards { grid-template-columns: 1fr; }
   .hero-ctas { flex-direction: column; }
   .hero-ctas .btn { width: 100%; justify-content: center; }
+}
+
+/* ── UTILITY ── */
+.btn-full { width: 100%; justify-content: center; }
+
+/* ── REDUCED MOTION ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  /* Reveal elements always visible when motion is reduced */
+  .js-enabled .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
