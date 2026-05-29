@@ -144,13 +144,13 @@ function showError(title, items, fields = []) {
 }
 
 function validateClient() {
-  const nom = form.nom.value.trim();
+  const nom = form['_nom'].value.trim();
   const email = form.email.value.trim();
   const message = form.message.value.trim();
   const errors = [];
   const fields = [];
 
-  if (!nom)        { errors.push('Le nom est obligatoire.');     fields.push('nom'); }
+  if (!nom)        { errors.push('Le nom est obligatoire.');     fields.push('_nom'); }
   if (!email)      { errors.push('L’email est obligatoire.'); fields.push('email'); }
   else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     errors.push('Le format de l’email est invalide (ex : nom@domaine.fr).');
@@ -242,7 +242,7 @@ form.addEventListener('submit', async (e) => {
   }
 });
 
-['nom', 'email', 'message'].forEach(name => {
+['_nom', 'email', 'message'].forEach(name => {
   const el = form.querySelector(`[name="${name}"]`);
   if (el) el.addEventListener('input', () => el.classList.remove('input-error'));
 });
