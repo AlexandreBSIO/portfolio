@@ -246,3 +246,166 @@ form.addEventListener('submit', async (e) => {
   const el = form.querySelector(`[name="${name}"]`);
   if (el) el.addEventListener('input', () => el.classList.remove('input-error'));
 });
+
+/* ── MODALS : fiches projet détaillées ── */
+/* Contenu BROUILLON à corriger : déduit des infos existantes, à valider par Alexandre. */
+const PROJECTS = {
+  dokuverse: {
+    eyebrow: 'Projet personnel · Développement web',
+    title: 'DokuVerse',
+    tags: ['React', 'JavaScript', 'Base de données', 'Web App'],
+    blocks: [
+      { h: 'Contexte', p: "Application web personnelle de notation et de suivi d'animes et de mangas, avec un système de tierlist personnalisable pour classer ses œuvres préférées." },
+      { h: 'Ce que j’ai fait', items: [
+        "Conception de l'interface utilisateur en React",
+        "Système de notation et de suivi des œuvres",
+        "Tierlist personnalisable pour classer ses titres",
+        "Persistance des données en base"
+      ] },
+      { h: 'Outils & technologies', p: "React, JavaScript, HTML/CSS, base de données." },
+      { h: 'Ce que ça m’a appris', p: "Structurer une application front avec React et gérer l'état d'une interface interactive. Le projet m'a aussi fait travailler la modélisation des données." }
+    ]
+  },
+  cleanergy: {
+    eyebrow: 'Projet · Infrastructure Active Directory',
+    title: 'Cleanergy',
+    tags: ['Windows Server 2022', 'Active Directory', 'Proxmox', 'GPO / AGDLP', 'Kerberos', 'SSSD', 'DNSSEC'],
+    blocks: [
+      { h: 'Contexte', p: "Mise en place d'une infrastructure réseau et Active Directory complète pour Cleanergy, une entreprise fictive. Objectif : déployer un domaine, centraliser la gestion des utilisateurs et des postes, et intégrer des machines Linux au domaine." },
+      { h: 'Ce que j’ai fait', items: [
+        "Déploiement d'un contrôleur de domaine Windows Server 2022 sous Proxmox",
+        "Configuration du DNS et signature DNSSEC de la zone",
+        "Structure d'OU et gestion des droits selon le modèle AGDLP",
+        "Mise en place de GPO (sécurité, profils itinérants, restrictions postes)",
+        "Jonction de machines Linux au domaine via Kerberos / SSSD pour une authentification centralisée"
+      ] },
+      { h: 'Outils & technologies', p: "Windows Server 2022, Active Directory, Proxmox, GPO/AGDLP, Kerberos, SSSD, DNSSEC." },
+      { h: 'Ce que ça m’a appris', p: "La logique d'un annuaire centralisé et l'importance d'une structure d'OU et de droits propre dès le départ. L'intégration Linux/AD m'a fait comprendre le fonctionnement de Kerberos en pratique." }
+    ]
+  },
+  mgc: {
+    eyebrow: 'Stage · Administrateur Systèmes & Réseaux',
+    title: 'MGC',
+    tags: ['PingCastle', 'Active Directory', 'Kerberos AES-256', 'NTLM', 'VLAN', 'iPerf', 'Audit sécurité'],
+    blocks: [
+      { h: 'Contexte', p: "Stage d'administrateur systèmes & réseaux chez MGC. Mission centrée sur l'audit et le durcissement de l'Active Directory existant, ainsi que sur des interventions réseau. (Stage en cours.)" },
+      { h: 'Ce que j’ai fait', items: [
+        "Audit de sécurité de l'AD avec PingCastle et analyse du score de risque",
+        "Correction des vulnérabilités critiques remontées par l'outil",
+        "Remplacement du chiffrement DES par AES-256 sur Kerberos",
+        "Bannissement de NTLMv1 / LM et forçage de NTLMv2",
+        "Mise en service et vérification de liaisons réseau, configuration de VLANs sur les ports de switch",
+        "Tests de débit avec iPerf"
+      ] },
+      { h: 'Outils & technologies', p: "PingCastle, Active Directory, Kerberos (AES-256), NTLM, VLAN, iPerf." },
+      { h: 'Ce que ça m’a appris', p: "Confronter la théorie de la sécurité AD à un parc réel en production. L'audit PingCastle m'a montré comment prioriser les corrections par niveau de risque plutôt que de tout corriger en vrac." }
+    ]
+  }
+};
+
+const modalOverlay = document.getElementById('project-modal');
+const modalEl = modalOverlay ? modalOverlay.querySelector('.modal') : null;
+const modalContent = document.getElementById('modal-content');
+const modalCloseBtn = document.getElementById('modal-close');
+let lastFocused = null;
+
+function buildModalContent(data) {
+  modalContent.textContent = '';
+
+  const eyebrow = document.createElement('p');
+  eyebrow.className = 'modal-eyebrow';
+  eyebrow.textContent = data.eyebrow;
+  modalContent.appendChild(eyebrow);
+
+  const title = document.createElement('h3');
+  title.className = 'modal-title';
+  title.id = 'modal-title';
+  title.textContent = data.title;
+  modalContent.appendChild(title);
+
+  if (data.tags && data.tags.length) {
+    const tagWrap = document.createElement('div');
+    tagWrap.className = 'modal-tags';
+    data.tags.forEach(t => {
+      const tag = document.createElement('span');
+      tag.className = 'modal-tag';
+      tag.textContent = t;
+      tagWrap.appendChild(tag);
+    });
+    modalContent.appendChild(tagWrap);
+  }
+
+  data.blocks.forEach(block => {
+    const wrap = document.createElement('div');
+    wrap.className = 'modal-block';
+
+    const h = document.createElement('h4');
+    h.textContent = block.h;
+    wrap.appendChild(h);
+
+    if (block.items && block.items.length) {
+      const ul = document.createElement('ul');
+      block.items.forEach(text => {
+        const li = document.createElement('li');
+        li.textContent = text;
+        ul.appendChild(li);
+      });
+      wrap.appendChild(ul);
+    } else if (block.p) {
+      const p = document.createElement('p');
+      p.textContent = block.p;
+      wrap.appendChild(p);
+    }
+    modalContent.appendChild(wrap);
+  });
+}
+
+function openModal(key) {
+  const data = PROJECTS[key];
+  if (!data || !modalOverlay) return;
+  lastFocused = document.activeElement;
+  buildModalContent(data);
+  modalOverlay.hidden = false;
+  document.body.style.overflow = 'hidden';
+  // force reflow puis transition d'ouverture
+  requestAnimationFrame(() => modalOverlay.classList.add('open'));
+  if (modalEl) modalEl.focus();
+}
+
+function closeModal() {
+  if (!modalOverlay || modalOverlay.hidden) return;
+  modalOverlay.classList.remove('open');
+  document.body.style.overflow = '';
+  const finish = () => { modalOverlay.hidden = true; };
+  setTimeout(finish, 240);
+  if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
+}
+
+document.querySelectorAll('.project-detail-btn').forEach(btn => {
+  btn.addEventListener('click', () => openModal(btn.dataset.project));
+});
+
+if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
+
+if (modalOverlay) {
+  modalOverlay.addEventListener('click', (e) => {
+    if (e.target === modalOverlay) closeModal();
+  });
+}
+
+document.addEventListener('keydown', (e) => {
+  if (modalOverlay && modalOverlay.hidden) return;
+  if (e.key === 'Escape') { closeModal(); return; }
+  // focus trap simple sur Tab
+  if (e.key === 'Tab' && modalEl) {
+    const focusables = modalEl.querySelectorAll('button, a[href], [tabindex]:not([tabindex="-1"])');
+    if (!focusables.length) return;
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault(); last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault(); first.focus();
+    }
+  }
+});

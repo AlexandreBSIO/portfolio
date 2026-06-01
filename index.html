@@ -43,6 +43,7 @@
           <li><a href="#apropos">À propos</a></li>
           <li><a href="#projets">Projets</a></li>
           <li><a href="#competences">Compétences</a></li>
+          <li><a href="#writeups">Writeups</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
         <button class="nav-hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
@@ -53,6 +54,7 @@
         <a href="#apropos">À propos</a>
         <a href="#projets">Projets</a>
         <a href="#competences">Compétences</a>
+        <a href="#writeups">Writeups</a>
         <a href="#contact">Contact</a>
       </div>
     </nav>
@@ -78,7 +80,25 @@
               </a>
             </div>
           </div>
-          <div class="hero-avatar" aria-hidden="true">AB</div>
+          <div class="hero-terminal" aria-hidden="true">
+            <div class="terminal-bar">
+              <span class="terminal-dot terminal-dot--red"></span>
+              <span class="terminal-dot terminal-dot--yellow"></span>
+              <span class="terminal-dot terminal-dot--green"></span>
+              <span class="terminal-title">alexandre@portfolio: ~</span>
+            </div>
+            <div class="terminal-body">
+              <p class="terminal-line"><span class="terminal-prompt">$</span> whoami</p>
+              <p class="terminal-out">alexandre · étudiant BTS SIO SISR</p>
+              <p class="terminal-line"><span class="terminal-prompt">$</span> cat focus.txt</p>
+              <p class="terminal-out">Réseaux · Systèmes · Cybersécurité</p>
+              <p class="terminal-line"><span class="terminal-prompt">$</span> nmap -sV lab.local</p>
+              <p class="terminal-out terminal-out--dim">PORT     STATE  SERVICE</p>
+              <p class="terminal-out terminal-out--dim">22/tcp   open   ssh</p>
+              <p class="terminal-out terminal-out--dim">389/tcp  open   ldap   <span class="terminal-comment"># Active Directory</span></p>
+              <p class="terminal-line"><span class="terminal-prompt">$</span> <span class="terminal-blink"></span></p>
+            </div>
+          </div>
         </div>
         <div class="hero-divider"></div>
       </div>
@@ -119,46 +139,73 @@
           <h2 class="section-title">Compétences</h2>
           <div class="section-title-accent"></div>
         </div>
-        <div class="skills-grid">
-          <div class="skill-category reveal">
-            <h3>Réseaux</h3>
-            <div class="skill-badges">
-              <span class="badge">VLANs & Switchs</span>
-              <span class="badge">iPerf</span>
-              <span class="badge">DHCP</span>
-              <span class="badge">Wireshark</span>
+        <div class="skills-bento">
+
+          <div class="bento-card bento-card--reseaux reveal">
+            <div class="bento-head">
+              <svg class="bento-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="9" y="2" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="16" y="16" width="6" height="6" rx="1"/>
+                <path d="M12 8v4M12 12H5v4M12 12h7v4"/>
+              </svg>
+              <h3>Réseaux</h3>
+            </div>
+            <div class="bento-skills">
+              <span class="skill-chip">VLANs &amp; Switchs</span>
+              <span class="skill-chip">iPerf</span>
+              <span class="skill-chip">DHCP</span>
+              <span class="skill-chip">Wireshark</span>
             </div>
           </div>
-          <div class="skill-category reveal">
-            <h3>Systèmes</h3>
-            <div class="skill-badges">
-              <span class="badge">Windows Server</span>
-              <span class="badge">Active Directory</span>
-              <span class="badge">Linux Debian/Ubuntu</span>
-              <span class="badge">Proxmox</span>
-              <span class="badge">Tailscale</span>
+
+          <div class="bento-card bento-card--systemes reveal">
+            <div class="bento-head">
+              <svg class="bento-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="2" y="3" width="20" height="7" rx="1.5"/><rect x="2" y="14" width="20" height="7" rx="1.5"/>
+                <path d="M6 6.5h.01M6 17.5h.01"/>
+              </svg>
+              <h3>Systèmes</h3>
+            </div>
+            <div class="bento-skills">
+              <span class="skill-chip">Windows Server</span>
+              <span class="skill-chip">Active Directory</span>
+              <span class="skill-chip">Linux Debian/Ubuntu</span>
+              <span class="skill-chip">Proxmox</span>
+              <span class="skill-chip">Tailscale</span>
             </div>
           </div>
-          <div class="skill-category reveal">
-            <h3>Cybersécurité</h3>
-            <div class="skill-badges">
-              <span class="badge">Kali Linux</span>
-              <span class="badge">Hydra</span>
-              <span class="badge">Burp Suite</span>
-              <span class="badge">Nmap</span>
+
+          <div class="bento-card bento-card--cyber reveal">
+            <div class="bento-head">
+              <svg class="bento-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 2l8 3v6c0 5-3.5 8.5-8 11-4.5-2.5-8-6-8-11V5l8-3z"/><path d="M9 12l2 2 4-4"/>
+              </svg>
+              <h3>Cybersécurité</h3>
+            </div>
+            <div class="bento-skills">
+              <span class="skill-chip">Kali Linux</span>
+              <span class="skill-chip">Hydra</span>
+              <span class="skill-chip">Burp Suite</span>
+              <span class="skill-chip">Nmap</span>
             </div>
           </div>
-          <div class="skill-category reveal">
-            <h3>Dev & Outils</h3>
-            <div class="skill-badges">
-              <span class="badge">PHP</span>
-              <span class="badge">Python</span>
-              <span class="badge">HTML/CSS/JS</span>
-              <span class="badge">Docker</span>
-              <span class="badge">GLPI</span>
-              <span class="badge">Git</span>
+
+          <div class="bento-card bento-card--dev reveal">
+            <div class="bento-head">
+              <svg class="bento-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="8 6 3 12 8 18"/><polyline points="16 6 21 12 16 18"/><line x1="13" y1="4" x2="11" y2="20"/>
+              </svg>
+              <h3>Dev &amp; Outils</h3>
+            </div>
+            <div class="bento-skills">
+              <span class="skill-chip">PHP</span>
+              <span class="skill-chip">Python</span>
+              <span class="skill-chip">HTML/CSS/JS</span>
+              <span class="skill-chip">Docker</span>
+              <span class="skill-chip">GLPI</span>
+              <span class="skill-chip">Git</span>
             </div>
           </div>
+
         </div>
       </div>
     </section>
@@ -183,10 +230,13 @@
               <span class="project-tag">Base de données</span>
             </div>
             <p class="project-desc">Application de notation et de suivi d'animes et mangas. Intègre un système de tierlist personnalisable pour classer ses œuvres préférées.</p>
-            <a href="https://github.com/AlexandreBSIO" target="_blank" rel="noopener noreferrer" class="project-link">
-              <svg class="icon-github" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-              Voir sur GitHub
-            </a>
+            <div class="project-actions">
+              <button type="button" class="project-detail-btn" data-project="dokuverse" aria-haspopup="dialog">Voir le détail</button>
+              <a href="https://github.com/AlexandreBSIO" target="_blank" rel="noopener noreferrer" class="project-link">
+                <svg class="icon-github" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                Voir sur GitHub
+              </a>
+            </div>
           </article>
 
           <!-- Projet: Cleanergy -->
@@ -203,6 +253,9 @@
               <span class="project-tag">SSH</span>
             </div>
             <p class="project-desc">Infrastructure AD complète déployée sous Proxmox pour une entreprise fictive. Contrôleur de domaine, DNSSEC (Signature), GPO, profils itinérants et intégration Linux au domaine via Kerberos/SSSD.</p>
+            <div class="project-actions">
+              <button type="button" class="project-detail-btn" data-project="cleanergy" aria-haspopup="dialog">Voir le détail</button>
+            </div>
           </article>
 
           <!-- Projet: MGC Stage -->
@@ -221,6 +274,9 @@
               <span class="project-tag">Audit sécurité</span>
             </div>
             <p class="project-desc">Stage en cours. Audit sécurité AD via PingCastle : correction de vulnérabilités critiques, remplacement du chiffrement DES par AES-256 sur Kerberos, bannissement NTLMv1/LM et forçage NTLMv2. Mise en service et vérification de liaisons réseau, configuration VLANs sur ports de switch et tests de débit avec iPerf.</p>
+            <div class="project-actions">
+              <button type="button" class="project-detail-btn" data-project="mgc" aria-haspopup="dialog">Voir le détail</button>
+            </div>
           </article>
 
           <!-- Projet: Placeholder -->
@@ -228,6 +284,41 @@
             <div class="project-label">Prochain projet</div>
             <h3 class="project-title project-title--muted">Bientôt...</h3>
             <p class="project-desc muted">D'autres projets arrivent bientôt.</p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: WRITEUPS -->
+    <section id="writeups">
+      <div class="container">
+        <div class="reveal">
+          <h2 class="section-title">Writeups &amp; Labs</h2>
+          <div class="section-title-accent"></div>
+        </div>
+        <p class="section-intro reveal">Mes comptes-rendus de CTF, de machines et de labs sécurité. Cette section sera alimentée au fil de mes pratiques sur les plateformes d'entraînement.</p>
+        <div class="writeups-grid">
+
+          <article class="writeup-card writeup-card--soon reveal">
+            <div class="writeup-platform">TryHackMe</div>
+            <h3 class="writeup-title">Bientôt disponible</h3>
+            <p class="writeup-desc">Writeups de rooms et de parcours en cours de rédaction.</p>
+            <span class="writeup-status">À venir</span>
+          </article>
+
+          <article class="writeup-card writeup-card--soon reveal">
+            <div class="writeup-platform">Hack The Box</div>
+            <h3 class="writeup-title">Bientôt disponible</h3>
+            <p class="writeup-desc">Résolutions de machines détaillées, étape par étape.</p>
+            <span class="writeup-status">À venir</span>
+          </article>
+
+          <article class="writeup-card writeup-card--soon reveal">
+            <div class="writeup-platform">Labs perso</div>
+            <h3 class="writeup-title">Bientôt disponible</h3>
+            <p class="writeup-desc">Notes et retours d'expérience sur mes labs maison.</p>
+            <span class="writeup-status">À venir</span>
           </article>
 
         </div>
@@ -316,6 +407,16 @@
       </nav>
     </div>
   </footer>
+
+  <!-- MODAL : fiche détaillée projet (contenu injecté par js/main.js) -->
+  <div class="modal-overlay" id="project-modal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabindex="-1">
+      <button type="button" class="modal-close" id="modal-close" aria-label="Fermer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+      </button>
+      <div class="modal-content" id="modal-content"></div>
+    </div>
+  </div>
 
   <script src="js/main.js"></script>
 </body>
