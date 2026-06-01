@@ -627,6 +627,43 @@ section {
   border-style: dashed;
   border-color: rgba(124, 58, 237, 0.25);
 }
+.writeup-card--live {
+  border-color: var(--border-strong);
+}
+.writeup-card--live:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(124, 58, 237, 0.1);
+}
+.writeup-badge-img {
+  display: block;
+  max-width: 200px;
+  height: auto;
+  margin: 16px 0;
+  border-radius: 6px;
+}
+.writeup-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 4px;
+}
+.writeup-status--live {
+  color: #4ade80;
+  background: rgba(74, 222, 128, 0.08);
+  border-color: rgba(74, 222, 128, 0.3);
+}
+.writeup-profile-link {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent);
+  transition: color var(--transition);
+}
+.writeup-profile-link:hover {
+  color: var(--text-primary);
+}
 .writeup-platform {
   font-family: var(--font-mono);
   font-size: 0.72rem;
