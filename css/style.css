@@ -396,7 +396,7 @@ section {
 }
 .skills-bento {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
 }
 .bento-card {
@@ -410,11 +410,6 @@ section {
   border-color: var(--border-strong);
   transform: translateY(-3px);
 }
-/* Tailles bento asymétriques */
-.bento-card--reseaux  { grid-column: span 5; }
-.bento-card--systemes { grid-column: span 7; }
-.bento-card--cyber    { grid-column: span 7; }
-.bento-card--dev      { grid-column: span 5; }
 .bento-head {
   display: flex;
   align-items: center;
@@ -987,10 +982,6 @@ footer {
   .stat-card .stat-value { font-size: 0.9rem; }
 
   .skills-bento { grid-template-columns: 1fr; gap: 16px; }
-  .bento-card--reseaux,
-  .bento-card--systemes,
-  .bento-card--cyber,
-  .bento-card--dev { grid-column: auto; }
 
   .projects-grid { grid-template-columns: 1fr; }
 

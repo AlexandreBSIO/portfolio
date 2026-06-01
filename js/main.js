@@ -18,36 +18,44 @@ const navbar = document.getElementById('navbar');
 const sections = document.querySelectorAll('section[id]');
 const navAnchors = document.querySelectorAll('.nav-links a');
 
-function onScroll() {
-  navbar.classList.toggle('scrolled', window.scrollY > 10);
-
-  let current = '';
-  sections.forEach(s => {
-    if (window.scrollY >= s.offsetTop - 120) current = s.id;
-  });
-  navAnchors.forEach(a => {
-    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
-  });
+/* Bordure du navbar au scroll */
+if (navbar) {
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 10);
+  }, { passive: true });
 }
-window.addEventListener('scroll', onScroll, { passive: true });
+
+/* Lien actif : observe la section qui croise le centre du viewport
+   (un seul observateur, zéro lecture de layout au scroll) */
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    navAnchors.forEach(a =>
+      a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id)
+    );
+  });
+}, { rootMargin: '-50% 0px -50% 0px' });
+sections.forEach(s => navObserver.observe(s));
 
 /* ── MOBILE NAV ── */
 const hamburger = document.getElementById('hamburger');
 const mobileNav = document.getElementById('nav-mobile');
 
-hamburger.addEventListener('click', () => {
-  const open = mobileNav.classList.toggle('open');
-  hamburger.classList.toggle('open', open);
-  hamburger.setAttribute('aria-expanded', String(open));
-});
-
-mobileNav.querySelectorAll('a').forEach(a => {
-  a.addEventListener('click', () => {
-    mobileNav.classList.remove('open');
-    hamburger.classList.remove('open');
-    hamburger.setAttribute('aria-expanded', 'false');
+if (hamburger && mobileNav) {
+  hamburger.addEventListener('click', () => {
+    const open = mobileNav.classList.toggle('open');
+    hamburger.classList.toggle('open', open);
+    hamburger.setAttribute('aria-expanded', String(open));
   });
-});
+
+  mobileNav.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      mobileNav.classList.remove('open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    });
+  });
+}
 
 /* ── SCROLL REVEAL (IntersectionObserver) ── */
 const revealEls = document.querySelectorAll('.reveal');
@@ -102,10 +110,12 @@ function typeStep() {
   }
 }
 
-if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  typingEl.textContent = strings[0];
-} else {
-  typeStep();
+if (typingEl) {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    typingEl.textContent = strings[0];
+  } else {
+    typeStep();
+  }
 }
 
 /* ── CONTACT FORM (Formspree async) ── */
@@ -113,16 +123,16 @@ const form = document.getElementById('contact-form');
 const successMsg = document.getElementById('form-success');
 const errorBox = document.getElementById('form-error');
 
-const FIELD_LABELS = { nom: 'Nom', email: 'Email', message: 'Message' };
+const FIELD_LABELS = { _nom: 'Nom', email: 'Email', message: 'Message' };
 
 function clearErrors() {
   errorBox.classList.remove('visible');
-  errorBox.innerHTML = '';
+  errorBox.textContent = '';
   form.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
 }
 
 function showError(title, items, fields = []) {
-  errorBox.innerHTML = '';
+  errorBox.textContent = '';
   const strong = document.createElement('strong');
   strong.textContent = title;
   errorBox.appendChild(strong);
@@ -164,7 +174,7 @@ function validateClient() {
   return { errors, fields };
 }
 
-form.addEventListener('submit', async (e) => {
+if (form) form.addEventListener('submit', async (e) => {
   e.preventDefault();
   clearErrors();
 
@@ -242,7 +252,7 @@ form.addEventListener('submit', async (e) => {
   }
 });
 
-['_nom', 'email', 'message'].forEach(name => {
+if (form) ['_nom', 'email', 'message'].forEach(name => {
   const el = form.querySelector(`[name="${name}"]`);
   if (el) el.addEventListener('input', () => el.classList.remove('input-error'));
 });
@@ -309,6 +319,11 @@ const modalContent = document.getElementById('modal-content');
 const modalCloseBtn = document.getElementById('modal-close');
 let lastFocused = null;
 
+/* Doit rester ≥ la transition de .modal-overlay dans le CSS (220ms) */
+const MODAL_ANIM_MS = 240;
+/* Éléments rendus inertes (focus + lecteurs d'écran) pendant l'ouverture */
+const modalInertEls = ['header', 'main', 'footer'].map(s => document.querySelector(s));
+
 function buildModalContent(data) {
   modalContent.textContent = '';
 
@@ -367,6 +382,7 @@ function openModal(key) {
   buildModalContent(data);
   modalOverlay.hidden = false;
   document.body.style.overflow = 'hidden';
+  modalInertEls.forEach(el => el && el.setAttribute('inert', ''));
   // force reflow puis transition d'ouverture
   requestAnimationFrame(() => modalOverlay.classList.add('open'));
   if (modalEl) modalEl.focus();
@@ -376,8 +392,8 @@ function closeModal() {
   if (!modalOverlay || modalOverlay.hidden) return;
   modalOverlay.classList.remove('open');
   document.body.style.overflow = '';
-  const finish = () => { modalOverlay.hidden = true; };
-  setTimeout(finish, 240);
+  modalInertEls.forEach(el => el && el.removeAttribute('inert'));
+  setTimeout(() => { modalOverlay.hidden = true; }, MODAL_ANIM_MS);
   if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
 }
 
