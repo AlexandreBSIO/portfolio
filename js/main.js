@@ -251,19 +251,19 @@ form.addEventListener('submit', async (e) => {
 /* Contenu BROUILLON à corriger : déduit des infos existantes, à valider par Alexandre. */
 const PROJECTS = {
   dokuverse: {
-    eyebrow: 'Projet personnel · Développement web',
+    eyebrow: 'Projet personnel · Idée & conception',
     title: 'DokuVerse',
-    tags: ['React', 'JavaScript', 'Base de données', 'Web App'],
+    tags: ['React', 'JavaScript', 'Base de données', 'Web App', 'IA / Claude Code'],
     blocks: [
-      { h: 'Contexte', p: "Application web personnelle de notation et de suivi d'animes et de mangas, avec un système de tierlist personnalisable pour classer ses œuvres préférées." },
+      { h: 'Contexte', p: "Projet personnel dont je suis à l'origine : une application web de notation et de suivi d'animes et de mangas, avec un système de tierlist personnalisable. L'idée, le concept et les fonctionnalités sont les miens." },
       { h: 'Ce que j’ai fait', items: [
-        "Conception de l'interface utilisateur en React",
-        "Système de notation et de suivi des œuvres",
-        "Tierlist personnalisable pour classer ses titres",
-        "Persistance des données en base"
+        "Définition de l'idée, des fonctionnalités et de l'expérience visée",
+        "Conception du système de notation, de suivi et de la tierlist",
+        "Concrétisation de l'application en grande partie avec l'aide de Claude Code (assistant IA), que j'ai piloté et orienté",
+        "Choix de la stack (React, base de données) et itérations sur le résultat"
       ] },
-      { h: 'Outils & technologies', p: "React, JavaScript, HTML/CSS, base de données." },
-      { h: 'Ce que ça m’a appris', p: "Structurer une application front avec React et gérer l'état d'une interface interactive. Le projet m'a aussi fait travailler la modélisation des données." }
+      { h: 'Outils & technologies', p: "React, JavaScript, HTML/CSS, base de données. Développement assisté par IA (Claude Code)." },
+      { h: 'Ce que ça m’a appris', p: "Passer d'une idée à un produit fonctionnel en m'appuyant sur l'IA comme outil de développement : formuler des spécifications claires, structurer le projet, et itérer jusqu'au résultat voulu. Une vraie compétence aujourd'hui : savoir utiliser ces outils efficacement." }
     ]
   },
   cleanergy: {
@@ -290,7 +290,7 @@ const PROJECTS = {
     blocks: [
       { h: 'Contexte', p: "Stage d'administrateur systèmes & réseaux chez MGC. Mission centrée sur l'audit et le durcissement de l'Active Directory existant, ainsi que sur des interventions réseau. (Stage en cours.)" },
       { h: 'Ce que j’ai fait', items: [
-        "Audit de sécurité de l'AD avec PingCastle et analyse du score de risque",
+        "Audit de sécurité de l'AD avec PingCastle",
         "Correction des vulnérabilités critiques remontées par l'outil",
         "Remplacement du chiffrement DES par AES-256 sur Kerberos",
         "Bannissement de NTLMv1 / LM et forçage de NTLMv2",
@@ -298,7 +298,7 @@ const PROJECTS = {
         "Tests de débit avec iPerf"
       ] },
       { h: 'Outils & technologies', p: "PingCastle, Active Directory, Kerberos (AES-256), NTLM, VLAN, iPerf." },
-      { h: 'Ce que ça m’a appris', p: "Confronter la théorie de la sécurité AD à un parc réel en production. L'audit PingCastle m'a montré comment prioriser les corrections par niveau de risque plutôt que de tout corriger en vrac." }
+      { h: 'Ce que ça m’a appris', p: "Confronter la théorie de la sécurité AD à un parc réel en production. L'audit PingCastle m'a montré comment prioriser les corrections par criticité plutôt que de tout corriger en vrac." }
     ]
   }
 };
