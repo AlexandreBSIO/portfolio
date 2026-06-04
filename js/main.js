@@ -296,132 +296,21 @@ const PROJECTS = {
   mgc: {
     eyebrow: 'Stage · Administrateur Systèmes & Réseaux',
     title: 'MGC',
-    tags: ['PingCastle', 'Active Directory', 'Kerberos AES-256', 'NTLM', 'VLAN', 'iPerf', 'Audit sécurité'],
+    tags: ['PingCastle', 'Active Directory', 'Kerberos AES-256', 'NTLM', 'VLAN', 'iPerf', 'Wazuh', 'Sophos', 'CVE', 'Audit sécurité'],
     blocks: [
-      { h: 'Contexte', p: "Stage d'administrateur systèmes & réseaux chez MGC. Mission centrée sur l'audit et le durcissement de l'Active Directory existant, ainsi que sur des interventions réseau. (Stage en cours.)" },
-      { h: 'Ce que j’ai fait', items: [
-        "Audit de sécurité de l'AD avec PingCastle",
-        "Correction des vulnérabilités critiques remontées par l'outil",
-        "Remplacement du chiffrement DES par AES-256 sur Kerberos",
-        "Bannissement de NTLMv1 / LM et forçage de NTLMv2",
-        "Mise en service et vérification de liaisons réseau, configuration de VLANs sur les ports de switch",
-        "Tests de débit avec iPerf"
+      { h: 'Contexte', p: "Stage d'administrateur systèmes & réseaux chez MGC. Mission centrée sur l'audit et le durcissement de l'Active Directory existant, l'analyse de postes utilisateurs dans un scénario post-phishing, et des interventions réseau. (Stage en cours.)" },
+      { h: "Ce que j'ai fait", items: [
+        "Audit de sécurité de l'AD avec PingCastle et correction des vulnérabilités critiques remontées",
+        "Remplacement du chiffrement DES par AES-256 sur Kerberos, bannissement NTLMv1/LM et forçage NTLMv2",
+        "Analyse d'un poste utilisateur dans un scénario de phishing : identification de ce qu'un attaquant aurait pu exploiter",
+        "Détection de 3 applications avec CVE critiques ou hautes : Notepad++, VLC, 7-Zip — remontée et correction appliquée",
+        "Recommandation et mise en place d'alertes sur l'exécution de scripts depuis les postes utilisateurs",
+        "Mise en place d'une politique de whitelisting des exécutables et scripts via Sophos",
+        "Configuration d'alertes Wazuh sur les pics de requêtes LDAP (détection de reconnaissance réseau)",
+        "Mise en service et vérification de liaisons réseau, configuration de VLANs, tests de débit avec iPerf"
       ] },
-      { h: 'Outils & technologies', p: "PingCastle, Active Directory, Kerberos (AES-256), NTLM, VLAN, iPerf." },
-      { h: 'Ce que ça m’a appris', p: "Confronter la théorie de la sécurité AD à un parc réel en production. L'audit PingCastle m'a montré comment prioriser les corrections par criticité plutôt que de tout corriger en vrac." }
+      { h: 'Outils & technologies', p: "PingCastle, Active Directory, Kerberos (AES-256), NTLM, Wazuh, Sophos, VLAN, iPerf." },
+      { h: "Ce que ça m'a appris", p: "Voir un SI réel sous l'angle attaquant : partir d'un poste compromis et cartographier ce qui serait exploitable. Ça m'a aussi montré l'importance des alertes préventives — détecter avant que ça arrive vaut mieux que réagir après." }
     ]
   }
 };
-
-const modalOverlay = document.getElementById('project-modal');
-const modalEl = modalOverlay ? modalOverlay.querySelector('.modal') : null;
-const modalContent = document.getElementById('modal-content');
-const modalCloseBtn = document.getElementById('modal-close');
-let lastFocused = null;
-
-/* Doit rester ≥ la transition de .modal-overlay dans le CSS (220ms) */
-const MODAL_ANIM_MS = 240;
-/* Éléments rendus inertes (focus + lecteurs d'écran) pendant l'ouverture */
-const modalInertEls = ['header', 'main', 'footer'].map(s => document.querySelector(s));
-
-function buildModalContent(data) {
-  modalContent.textContent = '';
-
-  const eyebrow = document.createElement('p');
-  eyebrow.className = 'modal-eyebrow';
-  eyebrow.textContent = data.eyebrow;
-  modalContent.appendChild(eyebrow);
-
-  const title = document.createElement('h3');
-  title.className = 'modal-title';
-  title.id = 'modal-title';
-  title.textContent = data.title;
-  modalContent.appendChild(title);
-
-  if (data.tags && data.tags.length) {
-    const tagWrap = document.createElement('div');
-    tagWrap.className = 'modal-tags';
-    data.tags.forEach(t => {
-      const tag = document.createElement('span');
-      tag.className = 'modal-tag';
-      tag.textContent = t;
-      tagWrap.appendChild(tag);
-    });
-    modalContent.appendChild(tagWrap);
-  }
-
-  data.blocks.forEach(block => {
-    const wrap = document.createElement('div');
-    wrap.className = 'modal-block';
-
-    const h = document.createElement('h4');
-    h.textContent = block.h;
-    wrap.appendChild(h);
-
-    if (block.items && block.items.length) {
-      const ul = document.createElement('ul');
-      block.items.forEach(text => {
-        const li = document.createElement('li');
-        li.textContent = text;
-        ul.appendChild(li);
-      });
-      wrap.appendChild(ul);
-    } else if (block.p) {
-      const p = document.createElement('p');
-      p.textContent = block.p;
-      wrap.appendChild(p);
-    }
-    modalContent.appendChild(wrap);
-  });
-}
-
-function openModal(key) {
-  const data = PROJECTS[key];
-  if (!data || !modalOverlay) return;
-  lastFocused = document.activeElement;
-  buildModalContent(data);
-  modalOverlay.hidden = false;
-  document.body.style.overflow = 'hidden';
-  modalInertEls.forEach(el => el && el.setAttribute('inert', ''));
-  // force reflow puis transition d'ouverture
-  requestAnimationFrame(() => modalOverlay.classList.add('open'));
-  if (modalEl) modalEl.focus();
-}
-
-function closeModal() {
-  if (!modalOverlay || modalOverlay.hidden) return;
-  modalOverlay.classList.remove('open');
-  document.body.style.overflow = '';
-  modalInertEls.forEach(el => el && el.removeAttribute('inert'));
-  setTimeout(() => { modalOverlay.hidden = true; }, MODAL_ANIM_MS);
-  if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
-}
-
-document.querySelectorAll('.project-detail-btn').forEach(btn => {
-  btn.addEventListener('click', () => openModal(btn.dataset.project));
-});
-
-if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
-
-if (modalOverlay) {
-  modalOverlay.addEventListener('click', (e) => {
-    if (e.target === modalOverlay) closeModal();
-  });
-}
-
-document.addEventListener('keydown', (e) => {
-  if (modalOverlay && modalOverlay.hidden) return;
-  if (e.key === 'Escape') { closeModal(); return; }
-  // focus trap simple sur Tab
-  if (e.key === 'Tab' && modalEl) {
-    const focusables = modalEl.querySelectorAll('button, a[href], [tabindex]:not([tabindex="-1"])');
-    if (!focusables.length) return;
-    const first = focusables[0];
-    const last = focusables[focusables.length - 1];
-    if (e.shiftKey && document.activeElement === first) {
-      e.preventDefault(); last.focus();
-    } else if (!e.shiftKey && document.activeElement === last) {
-      e.preventDefault(); first.focus();
-    }
-  }
-});
