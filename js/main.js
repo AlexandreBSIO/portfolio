@@ -303,14 +303,14 @@ const PROJECTS = {
         "Audit de sécurité de l'AD avec PingCastle et correction des vulnérabilités critiques remontées",
         "Remplacement du chiffrement DES par AES-256 sur Kerberos, bannissement NTLMv1/LM et forçage NTLMv2",
         "Analyse d'un poste utilisateur dans un scénario de phishing : identification de ce qu'un attaquant aurait pu exploiter",
-        "Détection de 3 applications avec CVE critiques ou hautes : Notepad++, VLC, 7-Zip — remontée et correction appliquée",
+        "Détection de 3 applications avec CVE critiques ou hautes (Notepad++, VLC, 7-Zip), remontée et correction appliquée",
         "Recommandation et mise en place d'alertes sur l'exécution de scripts depuis les postes utilisateurs",
         "Mise en place d'une politique de whitelisting des exécutables et scripts via Sophos",
         "Configuration d'alertes Wazuh sur les pics de requêtes LDAP (détection de reconnaissance réseau)",
         "Mise en service et vérification de liaisons réseau, configuration de VLANs, tests de débit avec iPerf"
       ] },
       { h: 'Outils & technologies', p: "PingCastle, Active Directory, Kerberos (AES-256), NTLM, Wazuh, Sophos, VLAN, iPerf." },
-      { h: "Ce que ça m'a appris", p: "Voir un SI réel sous l'angle attaquant : partir d'un poste compromis et cartographier ce qui serait exploitable. Ça m'a aussi montré l'importance des alertes préventives — détecter avant que ça arrive vaut mieux que réagir après." }
+      { h: "Ce que ça m'a appris", p: "Voir un SI réel sous l'angle attaquant : partir d'un poste compromis et cartographier ce qui serait exploitable. Ça m'a aussi montré l'importance des alertes préventives, car détecter avant que ça arrive vaut mieux que réagir après." }
     ]
   }
 };
